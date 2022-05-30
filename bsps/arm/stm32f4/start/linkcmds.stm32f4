@@ -1,9 +1,11 @@
 MEMORY {
-	RAM_INT : ORIGIN = 0x20000000, LENGTH = 128k
-	ROM_INT : ORIGIN = 0x00000000, LENGTH = 1M
+	ROM_START    : ORIGIN = 0x00000000, LENGTH = 1K
+	FLASH_CONFIG : ORIGIN = 0x00000400, LENGTH = 16
+        ROM_INT      : ORIGIN = 0x00000410, LENGTH = 1M
+	RAM_INT : ORIGIN = 0x20000000, LENGTH = 384k
 }
 
-REGION_ALIAS ("REGION_START", ROM_INT);
+REGION_ALIAS ("REGION_START", ROM_START);
 REGION_ALIAS ("REGION_VECTOR", RAM_INT);
 REGION_ALIAS ("REGION_TEXT", ROM_INT);
 REGION_ALIAS ("REGION_TEXT_LOAD", ROM_INT);
@@ -21,4 +23,19 @@ REGION_ALIAS ("REGION_STACK", RAM_INT);
 REGION_ALIAS ("REGION_NOCACHE", RAM_INT);
 REGION_ALIAS ("REGION_NOCACHE_LOAD", RAM_INT);
 
+SECTIONS {
+    /* Kinetis Flash Configuration data */
+    . = 0x400 ;
+    .FlashConfig : ALIGN_WITH_INPUT {
+        PROVIDE(__FLASH_CONFIG_START__ = .) ;
+        KEEP(*(.FlashConfig))
+        PROVIDE(__FLASH_CONFIG_END__ = .) ;
+
+        ASSERT(!(__FLASH_CONFIG_START__ == __FLASH_CONFIG_END__), "Linker Flash Config Support Enabled, but no .FlashConfig section provided within application");
+
+        /* End of Kinetis Flash Configuration data */
+    } > FLASH_CONFIG
+}
+
 INCLUDE linkcmds.armv7m
+

@@ -14,10 +14,15 @@
 #include <assert.h>
 #include <bsp/stm32f4.h>
 
+#include <bsp/flashconfig.h>
+__attribute__((used)) static const void *mkflash_cfg = &FlashConfig;
+
+
 #ifdef STM32F4_FAMILY_F4XXXX
 
 #include <bsp/stm32f4xxxx_rcc.h>
 #include <bsp/stm32f4xxxx_flash.h>
+
 
 static rtems_status_code set_system_clk(
   uint32_t sys_clk,

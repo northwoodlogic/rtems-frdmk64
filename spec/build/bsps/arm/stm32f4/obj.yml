@@ -15,6 +15,7 @@ install:
 - destination: ${BSP_INCLUDEDIR}/bsp
   source:
   - bsps/arm/stm32f4/include/bsp/i2c.h
+  - bsps/arm/stm32f4/include/bsp/flashconfig.h
   - bsps/arm/stm32f4/include/bsp/io.h
   - bsps/arm/stm32f4/include/bsp/irq.h
   - bsps/arm/stm32f4/include/bsp/rcc.h
@@ -51,6 +52,7 @@ source:
 - bsps/arm/stm32f4/start/bspreset.c
 - bsps/arm/stm32f4/start/bspstart.c
 - bsps/arm/stm32f4/start/bspstarthook.c
+- bsps/arm/stm32f4/start/flashconfig.c
 - bsps/arm/stm32f4/start/io.c
 - bsps/arm/stm32f4/start/rcc.c
 - bsps/arm/stm32f4/start/start-config-io.c
