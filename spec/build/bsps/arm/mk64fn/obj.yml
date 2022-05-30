@@ -1,0 +1,52 @@
+SPDX-License-Identifier: CC-BY-SA-4.0 OR BSD-2-Clause
+build-type: objects
+cflags: []
+copyrights:
+- Copyright (C) 2020 embedded brains GmbH (http://www.embedded-brains.de)
+cppflags: []
+cxxflags: []
+enabled-by: true
+includes: []
+install:
+- destination: ${BSP_INCLUDEDIR}
+  source:
+  - bsps/arm/mk64fn/include/bsp.h
+  - bsps/arm/mk64fn/include/tm27.h
+- destination: ${BSP_INCLUDEDIR}/bsp
+  source:
+  - bsps/arm/mk64fn/include/bsp/flashconfig.h
+  - bsps/arm/mk64fn/include/bsp/irq.h
+  - bsps/arm/mk64fn/include/bsp/mk64fn.h
+  - bsps/arm/mk64fn/include/bsp/usart.h
+- destination: ${BSP_LIBDIR}
+  source:
+  - bsps/arm/mk64fn/start/linkcmds
+links: []
+source:
+- bsps/arm/shared/clock/clock-armv7m.c
+- bsps/arm/shared/irq/irq-armv7m.c
+- bsps/arm/shared/irq/irq-dispatch-armv7m.c
+- bsps/arm/shared/start/bsp-start-memcpy.S
+- bsps/arm/mk64fn/console/console-config.c
+- bsps/arm/mk64fn/console/usart.c
+- bsps/arm/mk64fn/start/bspreset.c
+- bsps/arm/mk64fn/start/bspstart.c
+- bsps/arm/mk64fn/start/bspstarthook.c
+- bsps/arm/mk64fn/start/flashconfig.c
+- bsps/arm/mk64fn/start/clock_config.c
+- bsps/arm/mk64fn/start/pin_mux.c
+- bsps/arm/mk64fn/start/fsl_clock.c
+- bsps/shared/cache/nocache.c
+- bsps/shared/dev/btimer/btimer-cpucounter.c
+- bsps/shared/dev/cpucounter/cpucounterfrequency.c
+- bsps/shared/dev/cpucounter/cpucounterread.c
+- bsps/shared/dev/getentropy/getentropy-cpucounter.c
+- bsps/shared/dev/serial/legacy-console-control.c
+- bsps/shared/dev/serial/legacy-console-select.c
+- bsps/shared/dev/serial/legacy-console.c
+- bsps/shared/irq/irq-default-handler.c
+- bsps/shared/start/bspfatal-default.c
+- bsps/shared/start/gettargethash-default.c
+- bsps/shared/start/sbrk.c
+- bsps/shared/start/stackalloc.c
+type: build
