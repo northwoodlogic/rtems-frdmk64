@@ -12,64 +12,27 @@
 #include <bsp/irq.h>
 #include <bsp/usart.h>
 #include <bsp/mk64fn.h>
+#include <fsl_uart.h>
+#include <fsl_clock.h>
+
+static uint8_t uart_initialized = 0;
 
 #if 0
-static volatile stm32f4_usart *usart_get_regs(const console_tbl *ct)
-{
-  return (stm32f4_usart *) ct->ulCtrlPort1;
-}
-#endif
-
-#if 0
-static rtems_vector_number usart_get_irq_number(const console_tbl *ct)
-{
-  return ct->ulIntVector;
-}
-#endif
-
-#if 0
-static const stm32f4_rcc_index usart_rcc_index [] = {
-  STM32F4_RCC_USART1,
-  STM32F4_RCC_USART2,
-  STM32F4_RCC_USART3,
-  STM32F4_RCC_UART4,
-  STM32F4_RCC_UART5,
-#ifdef STM32F4_FAMILY_F4XXXX
-  STM32F4_RCC_USART6
-#endif /* STM32F4_FAMILY_F4XXXX */
-};
-
-static stm32f4_rcc_index usart_get_rcc_index(const console_tbl *ct)
-{
-  return usart_rcc_index [ct->ulCtrlPort2];
-}
-#endif
-
-
 static uint32_t usart_get_baud(const console_tbl *ct)
 {
   return ct->ulClock;
 }
+#endif
 
 static void usart_initialize(int minor)
 {
-  const console_tbl *ct = Console_Port_Tbl [minor];
-#if 0
-  volatile stm32f4_usart *usart = usart_get_regs(ct);
-  uint32_t pclk = usart_get_pclk(ct);
-  uint32_t baud = usart_get_baud(ct);
-  stm32f4_rcc_index rcc_index = usart_get_rcc_index(ct);
+  // const console_tbl *ct = Console_Port_Tbl [minor];
 
-  stm32f4_rcc_set_clock(rcc_index, true);
-
-  usart->cr1 = 0;
-  usart->cr2 = 0;
-  usart->cr3 = 0;
-  usart->bbr = usart_get_bbr(usart, pclk, baud);
-  usart->cr1 = STM32F4_USART_CR1_UE
-    | STM32F4_USART_CR1_TE
-    | STM32F4_USART_CR1_RE;
-#endif
+  uart_config_t cfg;
+  UART_GetDefaultConfig(&cfg);
+  cfg.enableTx = true;
+  cfg.enableRx = true;
+  UART_Init(UART0, &cfg, CLOCK_GetCoreSysClkFreq());
 }
 
 static int usart_first_open(int major, int minor, void *arg)
@@ -93,16 +56,16 @@ static int usart_last_close(int major, int minor, void *arg)
 static int usart_read_polled(int minor)
 {
   const console_tbl *ct = Console_Port_Tbl [minor];
-  return -1;
-#if 0
-  volatile stm32f4_usart *usart = usart_get_regs(ct);
-
-  if ((usart->sr & STM32F4_USART_SR_RXNE) != 0) {
-    return STM32F4_USART_DR_GET(usart->dr);
-  } else {
-    return -1;
+  if (!uart_initialized) {
+    usart_initialize(minor);
+    uart_initialized = 1;
   }
-#endif
+
+  if (UART_GetRxFifoCount(UART0) > 0)
+    return UART_ReadByte(UART0) & 0xFF;
+
+  
+  return -1;
 }
 
 char console_membuf[8192] = { 0 };
@@ -111,16 +74,12 @@ int console_membuf_ptr = 0;
 static void usart_write_polled(int minor, char c)
 {
   const console_tbl *ct = Console_Port_Tbl [minor];
-  console_membuf[console_membuf_ptr++ % sizeof(console_membuf)] = c;
-#if 0
-  volatile stm32f4_usart *usart = usart_get_regs(ct);
-
-  while ((usart->sr & STM32F4_USART_SR_TXE) == 0) {
-    /* Wait */
+  if (!uart_initialized) {
+    usart_initialize(minor);
+    uart_initialized = 1;
   }
-
-  usart->dr = STM32F4_USART_DR(c);
-#endif
+  console_membuf[console_membuf_ptr++ % sizeof(console_membuf)] = c;
+  UART_WriteBlocking(UART0, (const uint8_t *)&c, 1);
 }
 
 static ssize_t usart_write_support_polled(

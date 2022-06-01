@@ -37,10 +37,26 @@ static void output_char(char c)
 {
   const console_fns *con =
     Console_Configuration_Ports [Console_Port_Minor].pDeviceFns;
-
+  /*
+   * note to self, this tries writing to the uart data register before
+   * the uart has been configured. It causes a bus abort if the uart
+   * clock isn't running
+   */
   con->deviceWritePolled((int) Console_Port_Minor, c);
+}
+
+static int input_char(void)
+{
+  const console_fns *con =
+    Console_Configuration_Ports [Console_Port_Minor].pDeviceFns;
+  /*
+   * note to self, this tries writing to the uart data register before
+   * the uart has been configured. It causes a bus abort if the uart
+   * clock isn't running
+   */
+  return con->deviceRead((int) Console_Port_Minor);
 }
 
 BSP_output_char_function_type BSP_output_char = output_char;
 
-BSP_polling_getchar_function_type BSP_poll_char = NULL;
+BSP_polling_getchar_function_type BSP_poll_char = input_char;

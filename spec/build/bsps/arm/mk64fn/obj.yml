@@ -29,6 +29,7 @@ source:
 - bsps/arm/shared/start/bsp-start-memcpy.S
 - bsps/arm/mk64fn/console/console-config.c
 - bsps/arm/mk64fn/console/usart.c
+- bsps/arm/mk64fn/console/fsl_uart.c
 - bsps/arm/mk64fn/start/bspreset.c
 - bsps/arm/mk64fn/start/bspstart.c
 - bsps/arm/mk64fn/start/bspstarthook.c
