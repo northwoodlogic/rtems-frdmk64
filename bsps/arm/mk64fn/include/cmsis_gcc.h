@@ -119,6 +119,7 @@
 
 /* #########################  Startup and Lowlevel Init  ######################## */
 
+#if 0
 #ifndef __PROGRAM_START
 
 /**
@@ -164,6 +165,7 @@ __STATIC_FORCEINLINE __NO_RETURN void __cmsis_start(void)
 }
   
 #define __PROGRAM_START           __cmsis_start
+#endif
 #endif
 
 #ifndef __INITIAL_SP
