@@ -39,6 +39,8 @@ links:
   uid: ticker
 - role: build-dependency
   uid: unlimited
+- role: build-dependency
+  uid: shell
 type: build
 use-after:
 - rtemstest
