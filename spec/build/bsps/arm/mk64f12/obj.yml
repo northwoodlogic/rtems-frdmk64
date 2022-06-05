@@ -6,37 +6,38 @@ copyrights:
 cppflags: []
 cxxflags: []
 enabled-by: true
-includes: []
+includes:
+- bsps/arm/mk64f12/contrib/fsl
 install:
 - destination: ${BSP_INCLUDEDIR}
   source:
-  - bsps/arm/mk64fn/include/bsp.h
-  - bsps/arm/mk64fn/include/tm27.h
+  - bsps/arm/mk64f12/include/bsp.h
+  - bsps/arm/mk64f12/include/tm27.h
 - destination: ${BSP_INCLUDEDIR}/bsp
   source:
-  - bsps/arm/mk64fn/include/bsp/flashconfig.h
-  - bsps/arm/mk64fn/include/bsp/irq.h
-  - bsps/arm/mk64fn/include/bsp/mk64fn.h
-  - bsps/arm/mk64fn/include/bsp/usart.h
+  - bsps/arm/mk64f12/include/bsp/flashconfig.h
+  - bsps/arm/mk64f12/include/bsp/irq.h
+  - bsps/arm/mk64f12/include/bsp/mk64f12.h
+  - bsps/arm/mk64f12/include/bsp/usart.h
 - destination: ${BSP_LIBDIR}
   source:
-  - bsps/arm/mk64fn/start/linkcmds
+  - bsps/arm/mk64f12/start/linkcmds
 links: []
 source:
 - bsps/arm/shared/clock/clock-armv7m.c
 - bsps/arm/shared/irq/irq-armv7m.c
 - bsps/arm/shared/irq/irq-dispatch-armv7m.c
 - bsps/arm/shared/start/bsp-start-memcpy.S
-- bsps/arm/mk64fn/console/console-config.c
-- bsps/arm/mk64fn/console/usart.c
-- bsps/arm/mk64fn/console/fsl_uart.c
-- bsps/arm/mk64fn/start/bspreset.c
-- bsps/arm/mk64fn/start/bspstart.c
-- bsps/arm/mk64fn/start/bspstarthook.c
-- bsps/arm/mk64fn/start/flashconfig.c
-- bsps/arm/mk64fn/start/clock_config.c
-- bsps/arm/mk64fn/start/pin_mux.c
-- bsps/arm/mk64fn/start/fsl_clock.c
+- bsps/arm/mk64f12/console/console-config.c
+- bsps/arm/mk64f12/console/usart.c
+- bsps/arm/mk64f12/contrib/fsl/fsl_uart.c
+- bsps/arm/mk64f12/start/bspreset.c
+- bsps/arm/mk64f12/start/bspstart.c
+- bsps/arm/mk64f12/start/bspstarthook.c
+- bsps/arm/mk64f12/start/flashconfig.c
+- bsps/arm/mk64f12/start/clock_config.c
+- bsps/arm/mk64f12/start/pin_mux.c
+- bsps/arm/mk64f12/contrib/fsl/fsl_clock.c
 - bsps/shared/cache/nocache.c
 - bsps/shared/dev/btimer/btimer-cpucounter.c
 - bsps/shared/dev/cpucounter/cpucounterfrequency.c
