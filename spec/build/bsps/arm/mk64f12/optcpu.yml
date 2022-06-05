@@ -1,0 +1,18 @@
+SPDX-License-Identifier: CC-BY-SA-4.0 OR BSD-2-Clause
+actions:
+- get-string: null
+- split: null
+- env-append: CFLAGS
+- env-append: CXXFLAGS
+build-type: option
+copyrights:
+- Copyright (C) 2020 embedded brains GmbH (http://www.embedded-brains.de)
+default:
+- -DCPU_MK64FN1M0VLL12
+default-by-variant: []
+description: |
+  Chip belongs to the xxxxxxx family.
+enabled-by: true
+links: []
+name: MK64F12_CPU_TYPE
+type: build

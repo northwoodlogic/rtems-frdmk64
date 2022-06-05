@@ -7,20 +7,19 @@
  */
 
 #include <rtems/bspIo.h>
-
 #include <libchip/serial.h>
 
 #include <bspopts.h>
 #include <bsp/irq.h>
 #include <bsp/usart.h>
-#include <bsp/mk64fn.h>
+#include <bsp/mk64f12.h>
 
 console_tbl Console_Configuration_Ports [] = {
     {
       .sDeviceName = "/dev/ttyS0",
       .deviceType = SERIAL_CUSTOM,
-      .pDeviceFns = &mk64fn_usart_fns,
-      .ulCtrlPort1 = (uint32_t) 0x4006A000u, /* uart 0 */
+      .pDeviceFns = &mk64f12_usart_fns,
+      .ulCtrlPort1 = (uint32_t)UART0, /* uart 0 */
       .ulCtrlPort2 = 0,
       .ulClock = 115200,
       .ulIntVector = 31

@@ -9,10 +9,6 @@
 #ifndef __FSL_DEVICE_REGISTERS_H__
 #define __FSL_DEVICE_REGISTERS_H__
 
-/* TODO: dave - make this build option in a .yml file */
-#define CPU_MK64FN1M0VLL12
-// #define CPU_MK64FN1M0VLL12_cm4
-
 /*
  * Include the cpu specific register header files.
  *

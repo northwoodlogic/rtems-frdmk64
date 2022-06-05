@@ -1,6 +1,6 @@
 /**
  * @file
- * @ingroup RTEMSBSPsARMMK64FN
+ * @ingroup RTEMSBSPsARMMK64F12
  * @brief Global BSP definitions.
  */
 
@@ -12,15 +12,15 @@
  * http://www.rtems.org/license/LICENSE.
  */
 
-#ifndef LIBBSP_ARM_MK64FN_BSP_H
-#define LIBBSP_ARM_MK64FN_BSP_H
+#ifndef LIBBSP_ARM_MK64F12_BSP_H
+#define LIBBSP_ARM_MK64F12_BSP_H
 
 /**
- * @defgroup RTEMSBSPsARMMK64FN MK64FN
+ * @defgroup RTEMSBSPsARMMK64F12 MK64F12
  *
  * @ingroup RTEMSBSPsARM
  *
- * @brief MK64FN Board Support Package.
+ * @brief MK64F12 Board Support Package.
  *
  * @{
  */
@@ -35,11 +35,8 @@ extern "C" {
 #endif /* __cplusplus */
 
 #define BSP_FEATURE_IRQ_EXTENSION
-
 #define BSP_ARMV7M_IRQ_PRIORITY_DEFAULT (13 << 4)
-
 #define BSP_ARMV7M_SYSTICK_PRIORITY (14 << 4)
-
 #define BSP_ARMV7M_SYSTICK_FREQUENCY 120000000
 
 #ifdef __cplusplus
@@ -49,4 +46,4 @@ extern "C" {
 /** @} */
 
 
-#endif /* LIBBSP_ARM_MK64FN_BSP_H */
+#endif /* LIBBSP_ARM_MK64F12_BSP_H */

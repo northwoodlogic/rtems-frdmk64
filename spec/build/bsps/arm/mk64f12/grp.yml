@@ -14,6 +14,8 @@ links:
 - role: build-dependency
   uid: abi
 - role: build-dependency
+  uid: optcpu
+- role: build-dependency
   uid: obj
 - role: build-dependency
   uid: ../../linkcmds

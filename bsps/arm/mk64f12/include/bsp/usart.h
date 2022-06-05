@@ -29,7 +29,7 @@ extern "C" {
 #endif /* __cplusplus */
 
 /* TODO: implement the console driver */
-extern const console_fns mk64fn_usart_fns;
+extern const console_fns mk64f12_usart_fns;
 
 /** @} */
 

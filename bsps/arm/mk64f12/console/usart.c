@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012 Sebastian Huber.  All rights reserved.
+ * Copyright (c) 2022 Dave Rush.  All rights reserved.
  *
  * The license and distribution terms for this file may be
  * found in the file LICENSE in this distribution or at
@@ -11,21 +11,12 @@
 #include <bsp.h>
 #include <bsp/irq.h>
 #include <bsp/usart.h>
-#include <bsp/mk64fn.h>
-#include <fsl_uart.h>
-#include <fsl_clock.h>
-
-static uint8_t uart_initialized = 0;
-
-#if 0
-static uint32_t usart_get_baud(const console_tbl *ct)
-{
-  return ct->ulClock;
-}
-#endif
+#include <bsp/mk64f12.h>
 
 static void usart_initialize(int minor)
 {
+/* console uart initialized in bspstart */
+#if 0
   // const console_tbl *ct = Console_Port_Tbl [minor];
 
   uart_config_t cfg;
@@ -33,6 +24,7 @@ static void usart_initialize(int minor)
   cfg.enableTx = true;
   cfg.enableRx = true;
   UART_Init(UART0, &cfg, CLOCK_GetCoreSysClkFreq());
+#endif
 }
 
 static int usart_first_open(int major, int minor, void *arg)
@@ -55,30 +47,17 @@ static int usart_last_close(int major, int minor, void *arg)
 
 static int usart_read_polled(int minor)
 {
-  const console_tbl *ct = Console_Port_Tbl [minor];
-  if (!uart_initialized) {
-    usart_initialize(minor);
-    uart_initialized = 1;
-  }
+  /* const console_tbl *ct = Console_Port_Tbl [minor]; */
 
   if (UART_GetRxFifoCount(UART0) > 0)
     return UART_ReadByte(UART0) & 0xFF;
-
   
   return -1;
 }
 
-char console_membuf[8192] = { 0 };
-int console_membuf_ptr = 0;
-
 static void usart_write_polled(int minor, char c)
 {
-  const console_tbl *ct = Console_Port_Tbl [minor];
-  if (!uart_initialized) {
-    usart_initialize(minor);
-    uart_initialized = 1;
-  }
-  console_membuf[console_membuf_ptr++ % sizeof(console_membuf)] = c;
+/*  const console_tbl *ct = Console_Port_Tbl [minor]; */
   UART_WriteBlocking(UART0, (const uint8_t *)&c, 1);
 }
 
@@ -102,7 +81,7 @@ static int usart_set_attributes(int minor, const struct termios *term)
   return -1;
 }
 
-const console_fns mk64fn_usart_fns = {
+const console_fns mk64f12_usart_fns = {
   .deviceProbe = libchip_serial_default_probe,
   .deviceFirstOpen = usart_first_open,
   .deviceLastClose = usart_last_close,

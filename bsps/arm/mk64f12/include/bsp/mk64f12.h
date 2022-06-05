@@ -1,6 +1,6 @@
 /**
  * @file
- * @ingroup mk64fn_reg
+ * @ingroup mk64f12_reg
  * @brief Register definitions.
  */
 
@@ -12,17 +12,20 @@
  * http://www.rtems.org/license/LICENSE.
  */
 
-#ifndef LIBBSP_ARM_MK64FN_MK64FN_H
-#define LIBBSP_ARM_MK64FN_MK64FN_H
+#ifndef LIBBSP_ARM_MK64F12_MK64F12_H
+#define LIBBSP_ARM_MK64F12_MK64F12_H
 
 #include <bsp/utility.h>
 #include <bspopts.h>
 
 /* include kinetis sdk headers here */
+#include <fsl_uart.h>
+#include <fsl_clock.h>
+#include <fsl_rnga.h>
 
 /** @} */
 
 /** @} */
 
 
-#endif /* LIBBSP_ARM_MK64FN_MK64FN_H */
+#endif /* LIBBSP_ARM_MK64F12_MK64F12_H */

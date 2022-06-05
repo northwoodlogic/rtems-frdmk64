@@ -53,6 +53,9 @@ rtems_task Init(
     RTEMS_SELF, RTEMS_MAXIMUM_PRIORITY - 1, &old_priority);
   rtems_task_mode(RTEMS_PREEMPT,  RTEMS_PREEMPT_MASK, &old_mode);
 
+  uint32_t rdata = arc4random();
+  printf("\r\nRandom Data: 0x%08X\r\n", rdata);
+
   rtems_shell_init(
       "SHLL",                       /* task name */
       RTEMS_MINIMUM_STACK_SIZE * 4, /* task stack size */
